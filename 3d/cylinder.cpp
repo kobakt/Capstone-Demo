@@ -113,15 +113,21 @@ void Cylinder::updateData()
     QByteArray vertexData(numOfPoints * stride, Qt::Initialization::Uninitialized);
     float *p = reinterpret_cast<float *>(vertexData.data());
 
-    QVector3D a = QVector3D(1, 1, 0);
-    QVector3D b = QVector3D(1,-1,0);
-    QVector3D c = QVector3D(-1,-1,0);
-    QVector3D d = QVector3D(-1,1,0);
+    // Top Right
+    QVector3D topRight = QVector3D(1, 1, 0);
+    // Top Left
+    QVector3D topLeft = QVector3D(1,-1,0);
+    // Bottom Left
+    QVector3D botLeft = QVector3D(-1,-1,0);
+    // Bottom Right
+    QVector3D botRight = QVector3D(-1,1,0);
     //addRectangle(p, a, b, c, d);
-    addPoint(p, a);
-    addPoint(p, b);
-    addPoint(p, d);
-    addPoint(p, c);
+    // Order doesn't matter because its set
+    addPoint(p, topLeft);
+    addPoint(p, botLeft);
+    addPoint(p, topRight);
+    addPoint(p, botRight);
+
 
     setVertexData(vertexData);
     setStride(stride);
@@ -132,13 +138,19 @@ void Cylinder::updateData()
     It allows you to save space by doing back to back triangles that share 1 or more points.
     */
     QByteArray indexData(
-                        2 * sizeof(ushort),
-//                         2 * 3 * sizeof(ushort) /* 2 triangles, 3 vertices each*/,
+//                        2 * sizeof(ushort),
+                         2 * 3 * sizeof(ushort) /* 2 triangles, 3 vertices each*/,
                          Qt::Initialization::Uninitialized);
     quint16 *i = reinterpret_cast<ushort *>(indexData.data());
-//    *i++ = 0; *i++ = 1; *i++ = 2;
-//    *i++ = 2; *i++ = 1; *i++ = 3;
-    *i++ = 0; *i++ = 1;
+    // value refers to index of points above.
+    // set of three creates triangle face.
+    // order matters here,
+    // a face will only have one side.
+    // so clockwise and anticlockwise will set different sides
+    // although, when we actually render ariaplane, we'll want it double sided, so I guess we'll set twice going both directions
+    *i++ = 0; *i++ = 2; *i++ = 1;
+    *i++ = 1; *i++ = 2; *i++ = 3;
+//    *i++ = 0; *i++ = 1;
     setIndexData(indexData);
 
     setPrimitiveType(QQuick3DGeometry::PrimitiveType::Triangles);
