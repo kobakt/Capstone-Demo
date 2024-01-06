@@ -32,6 +32,9 @@ signals:
     void uvChanged();
     void uvAdjustChanged();
 private:
+    void addPoint(float*& p, QVector3D point);
+    void addTriangle(float*& p, QVector3D a, QVector3D b, QVector3D c);
+    void addRectangle(float*& p, QVector3D a, QVector3D b, QVector3D c, QVector3D d);
     void updateData();
     bool m_hasNormals = false;
     float m_normalXY = 0.0f;

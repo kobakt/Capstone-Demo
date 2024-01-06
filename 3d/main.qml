@@ -69,13 +69,6 @@ Window {
                     uvAdjust: 0.0 //sliderUV.value
                 }
                 materials: [defaultMaterial]
-//                materials: [
-//                    DefaultMaterial {
-//                        //cullMode: DefaultMaterial.NoCulling
-//                        //diffuseMap: cbTexture.checked ? baseColorMap : null
-//                        //specularAmount: 0.5
-//                    }
-//                ]
             }
         }
     }
