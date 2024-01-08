@@ -42,7 +42,7 @@ Window {
             Model {
                 id: cubeModel
                 x: -102.667
-                y: 9.212
+                y: 0
                 visible: true
                 source: "#Cube"
                 z: -12.95184
@@ -58,7 +58,7 @@ Window {
 
             Model {
                 id: cylinderModel
-                x: -0
+                x: 100
                 y: 0
                 visible: true
                 scale: Qt.vector3d(100, 100, 100)
@@ -68,7 +68,25 @@ Window {
                     uv: false //cbUV.checked
                     uvAdjust: 0.0 //sliderUV.value
                 }
-                materials: [defaultMaterial]
+                materials: [DefaultMaterial {
+                        diffuseColor: "blue"
+                    }
+                ]
+                SequentialAnimation on eulerRotation.y {
+                    loops: Animation.Infinite
+                    NumberAnimation {
+                        duration: 3000
+                        to: -90
+                        from: 90
+                        easing.type:Easing.InQuad
+                    }
+                    NumberAnimation {
+                        duration: 3000
+                        to: 90
+                        from: -90
+                        easing.type:Easing.OutQuad
+                    }
+                }
             }
         }
     }

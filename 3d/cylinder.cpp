@@ -139,7 +139,7 @@ void Cylinder::updateData()
     */
     QByteArray indexData(
 //                        2 * sizeof(ushort),
-                         2 * 3 * sizeof(ushort) /* 2 triangles, 3 vertices each*/,
+                         4 * 3 * sizeof(ushort) /* 2 triangles, 3 vertices each*/,
                          Qt::Initialization::Uninitialized);
     quint16 *i = reinterpret_cast<ushort *>(indexData.data());
     // value refers to index of points above.
@@ -149,7 +149,9 @@ void Cylinder::updateData()
     // so clockwise and anticlockwise will set different sides
     // although, when we actually render ariaplane, we'll want it double sided, so I guess we'll set twice going both directions
     *i++ = 0; *i++ = 2; *i++ = 1;
+        *i++ = 0; *i++ = 1; *i++ = 2;
     *i++ = 1; *i++ = 2; *i++ = 3;
+        *i++ = 1; *i++ = 3; *i++ = 2;
 //    *i++ = 0; *i++ = 1;
     setIndexData(indexData);
 
